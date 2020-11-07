@@ -18,8 +18,6 @@
 	Hello world!  
 </h1>
 
-<P>  The time on the server is ${serverTime}. </P>
-
 <div class="user-list">
 
 <c:forEach var="user" items="${users}">

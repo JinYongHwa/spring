@@ -6,4 +6,13 @@
 	<select id="getUsers" resultType="User">
 		select * from user
 	</select>
+	<select id="checkId" resultType="User">
+		select * from user where id=#{id} limit 1
+	</select>
+	<select id="login" resultType="User">
+		select * from user where id=#{id} and password=#{password} limit 1
+	</select>
+	<insert id="join">
+		insert into user (id,password,name) values (#{id},#{password},#{name})
+	</insert>
 </mapper>
