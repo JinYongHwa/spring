@@ -10,14 +10,15 @@ import kr.ac.mjc.service.BoardService;
 
 public class Navigator {
 	private static final Logger logger = LoggerFactory.getLogger(Navigator.class);
-	int page;
-	int start;
-	int end;
-	int prevPage;
-	int nextPage;
-	int startNum;
-	boolean isPrev;
-	boolean isNext;
+	private int page;
+	private int start;
+	private int end;
+	private int prevPage;
+	private int nextPage;
+	private int lastPage;
+	private int startNum;
+	private boolean prev;
+	private boolean next;
 
 	int count;
 
@@ -44,40 +45,41 @@ public class Navigator {
 		return arr;
 	}
 
-	static public Navigator getNav(int page,int count) {
-		Navigator nav=new Navigator();
-		nav.setPage(page);
-		nav.setCount(count);
+	 public Navigator getNav(int page,int count) {
+		
+		setPage(page);
+		setCount(count);
 
-		nav.setStart(((int)Math.floor(page-1)/nav.getNavCount())*nav.getNavCount()+1);
-		nav.setEnd(nav.getStart()+nav.getNavCount()-1);
+		setStart(((int)Math.floor(page-1)/getNavCount())*getNavCount()+1);
+		setEnd(getStart()+getNavCount()-1);
 		
 		
-		int totalPage=nav.getTotalPage(count);
+		int totalPage=getTotalPage(count);
 		
 		//글이 네비게이션셋일경우
-		if(nav.getStart()==1) {
-			nav.setPrev(false);
+		if(getStart()==1) {
+			setPrev(false);
 		}
 		else {
-			int prevPage=(page-1)/nav.getNavCount() *nav.getNavCount() -nav.getNavCount()+1;
-			nav.setPrevPage(prevPage);
-			nav.setPrev(true);
+			int prevPage=(page-1)/getNavCount() *getNavCount() -getNavCount()+1;
+			setPrevPage(prevPage);
+			setPrev(true);
 		}
 		//네비게이션 마지막이 글전체페이지수를 초과할경우	
-		if(nav.getEnd()>=totalPage) {
-			nav.setEnd(totalPage);
-			nav.setNext(false);
+		if(getEnd()>=totalPage) {
+			setEnd(totalPage);
+			setNext(false);
 		}
 		else {
-			nav.setNext(true);
+			setNext(true);
+			setNextPage(getStart()+navCount);
 		}
 		
-		int startNum=count-((page-1)*nav.itemPerPage);
-		nav.setStartNum(startNum);
+		int startNum=count-((page-1)*itemPerPage);
+		setStartNum(startNum);
 		
 		
-		return nav;
+		return this;
 	}
 
 	public int getTotalPage(int count) {
@@ -149,22 +151,20 @@ public class Navigator {
 		this.startNum = startNum;
 	}
 
+	
+
 	public boolean isPrev() {
-		return isPrev;
+		return prev;
 	}
-
-	public void setPrev(boolean isPrev) {
-		this.isPrev = isPrev;
+	public void setPrev(boolean prev) {
+		this.prev = prev;
 	}
-
 	public boolean isNext() {
-		return isNext;
+		return next;
 	}
-
-	public void setNext(boolean isNext) {
-		this.isNext = isNext;
+	public void setNext(boolean next) {
+		this.next = next;
 	}
-
 	public int getCount() {
 		return count;
 	}

@@ -16,3 +16,24 @@ td, th {
 .text-right{
 	text-align:right;
 }
+.text-center{
+	text-align:center;
+}
+
+.navigator{
+	margin-top:10px;
+	text-align:center;
+}
+.navigator a{
+	display:inline-block;
+	color:black;
+	border:1px solid #ddd;
+	width:30px;
+	height:30px;
+	line-height:30px;
+	text-decoration:none;
+}
+.navigator a.active{
+	background:#555;
+	color:white;
+}

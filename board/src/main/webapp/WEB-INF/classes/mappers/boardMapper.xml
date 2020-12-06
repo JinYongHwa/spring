@@ -6,7 +6,7 @@
 	<select id="list" resultType="Board" >
 		select * from board
 		order by date DESC
-		limit #{skip},10
+		limit #{skip},#{itemPerPage}
 	</select>
 	<select id="item" resultType="Board">
 		select * from user where id=#{id} limit 1
@@ -14,8 +14,23 @@
 	<select id="count" resultType="Query">
 		select count(*) count from board limit 1
 	</select>
+	<select id="getBoard" resultType="Board">
+		select * from board
+		where id=#{id}
+		limit 1
+	</select>
+	
 	<insert id="writeItem" >
-		insert into board (title,text) values(#{title},#{text})
+		insert into board (title,text,writer) values(#{title},#{text},#{writer})
 	</insert>
+	
+	<update id="modify">
+		update board set title=#{title},text=#{text},writer=#{writer}
+		where id=#{id}
+	</update>
+	<delete id="delete">
+		delete from board where id=#{id}
+	</delete>
+	
 	
 </mapper>

@@ -4,9 +4,17 @@ public class Query {
 	
 	private int skip;
 	private int count;
+	private int itemPerPage;
 	
 	
-	
+
+	public int getItemPerPage() {
+		return itemPerPage;
+	}
+
+	public void setItemPerPage(int itemPerPage) {
+		this.itemPerPage = itemPerPage;
+	}
 
 	public int getCount() {
 		return count;

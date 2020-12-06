@@ -16,11 +16,13 @@
 <body>
 
 	<div class="container">
-		<form action="write_process" method="post">
+		<form action="write.do" method="post">
 			<input class="form-control" name="title" placeholder="제목">
+			<input class="form-control mt-2" name="writer" placeholder="작성자">
 			<textarea class="form-control mt-2" height="500px" name="text" placeholder="내용"></textarea>
 			<div class="text-center mt-2">
-				<input type="submit" class="form-control" value="작성">
+			
+				<input type="submit" class="btn btn-primary" value="작성">
 			</div>
 		</form>
 

@@ -9,11 +9,14 @@ public class Board {
 	private String title;
 	private String text;
 	private Date date;
+	private String writer;
 	
-	
-	
-	
-	
+	public String getWriter() {
+		return writer;
+	}
+	public void setWriter(String writer) {
+		this.writer = writer;
+	}
 	public int getId() {
 		return id;
 	}
@@ -27,6 +30,12 @@ public class Board {
 		this.title = title;
 	}
 	public String getText() {
+		return text;
+	}
+	public String getHtml() {
+		if(text!=null) {
+			return text.replaceAll("\n", "<br/>");	
+		}
 		return text;
 	}
 	public void setText(String text) {

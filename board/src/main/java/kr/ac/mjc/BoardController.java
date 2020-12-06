@@ -23,9 +23,9 @@ import kr.ac.mjc.service.BoardService;
  * Handles requests for the application home page.
  */
 @Controller
-public class HomeController {
+public class BoardController {
 	
-	private static final Logger logger = LoggerFactory.getLogger(HomeController.class);
+	private static final Logger logger = LoggerFactory.getLogger(BoardController.class);
 	
 	@Autowired
 	BoardService service;
@@ -36,7 +36,6 @@ public class HomeController {
 	@RequestMapping(value = "/", method = RequestMethod.GET)
 	public ModelAndView list(@RequestParam(value="page",required=false) String page) {
 		
-		logger.info("page {}.", page);
 		int pageInt=1;
 		if(page!=null) {
 			pageInt=Integer.parseInt(page);
@@ -53,6 +52,7 @@ public class HomeController {
 		ModelAndView mav=new ModelAndView("list");
 		mav.addObject("list", list);
 		mav.addObject("nav", nav);
+		mav.addObject("currentPage", pageInt);
 		return mav;
 	}
 	
@@ -62,12 +62,54 @@ public class HomeController {
 		return "write";
 	}
 	
-	@RequestMapping(value = "/write_process", method = RequestMethod.POST)
+	@RequestMapping(value = "/write.do", method = RequestMethod.POST)
 	public String writeProcess(Board board) {
 		
 		service.insertBoard(board);
 		
 		return "redirect:/";
 	}
+	
+	@RequestMapping(value = "/board", method = RequestMethod.GET)
+	public ModelAndView boardItem(
+			@RequestParam(value="id",required=true) String id,
+			@RequestParam(value="page",required=false) String page) {
+		
+		Board board=service.getBoard(Integer.parseInt(id));
+		ModelAndView mav=new ModelAndView("board");
+		mav.addObject("board", board);
+		mav.addObject("page", page);
+		
+		return mav;
+	}
+	@RequestMapping(value = "/modify", method = RequestMethod.GET)
+	public ModelAndView modify(@RequestParam(value="id",required=true) String id,
+			@RequestParam(value="page",required=false) String page) {
+		
+		
+		Board board=service.getBoard(Integer.parseInt(id));
+		ModelAndView mav=new ModelAndView("modify");
+		mav.addObject("board", board);
+		mav.addObject("page", page);
+		
+		return mav;
+		
+		
+	}
+	@RequestMapping(value = "/modify.do", method = RequestMethod.POST)
+	public String modify(Board board,@RequestParam(value="page",required=false) String page) {
+		
+		service.modify(board);
+		
+		return String.format("redirect:/board?id=%s&page=%s",board.getId(),page);
+	}
+	@RequestMapping(value = "/delete.do", method = RequestMethod.GET)
+	public String delete(@RequestParam(value="id",required=true) String id,@RequestParam(value="page",required=false) String page) {
+		service.delete(Integer.parseInt(id));
+		
+		return String.format("redirect:/?page=%s",page);
+	}
+	
+	
 	
 }
