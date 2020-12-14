@@ -34,9 +34,9 @@
 		</div>
 		
 		<div class="text-center">
-			<a href="${ pageContext.request.contextPath }/list">목록</a>
-			<a href="${pageContext.request.contextPath }/modify?id=${board.id}">수정</a>
-			<a href="${pageContext.request.contextPath }/remove.do?id=${board.id}">삭제</a>
+			<a href="${ pageContext.request.contextPath }/list?page=${query.page}">목록</a>
+			<a href="${pageContext.request.contextPath }/modify?id=${board.id}&page=${query.page}">수정</a>
+			<a href="${pageContext.request.contextPath }/remove.do?id=${board.id}&page=${query.page}">삭제</a>
 		</div>
 		
 	</div>

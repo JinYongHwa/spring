@@ -15,6 +15,7 @@
 	<div class="container">
 		<form action="modify.do" method="post">
 			<input type="hidden" name="id" value="${board.id }">
+			<input type="hidden" name="page" value="${query.page }">
 			<input name="title" class="form-control" placeholder="제목" value="${board.title }">
 			<input name="writer" class="form-control" placeholder="작성자" value="${board.writer }">
 			<textarea name="text" class="form-control" placeholder="글내용">

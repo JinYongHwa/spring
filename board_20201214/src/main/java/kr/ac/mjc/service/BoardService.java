@@ -19,7 +19,7 @@ public class BoardService {
 	@Autowired
 	private SqlSession mybatis;
 	
-	private Navigator navigator=new Navigator(3,10);
+	private Navigator navigator=new Navigator(5,5);
 	
 	public void write(Board board) {
 		mybatis.insert("board.write",board);	
@@ -45,9 +45,13 @@ public class BoardService {
 	
 	public Navigator getNavigator(int page) {
 		Navigator nav=mybatis.selectOne("board.getCount");
-		logger.info("{}",nav.getCount());
-		nav=nav.getNav(page, nav.getCount());
-		return nav;
+		return navigator.getNav(page, nav.getCount());
+	}
+	
+	public void upViewCount(int id) {
+		Board board=getItem(id);
+		board.setViewCount(board.getViewCount()+1);
+		mybatis.update("board.setViewCount",board);
 	}
 	
 	

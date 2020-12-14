@@ -27,6 +27,10 @@
 		select count(*) as count from board
 		limit 1
 	</select>
+	<update id="setViewCount">
+		update board set viewCount=${viewCount}
+		where id=#{id}
+	</update>
 	
 	
 	

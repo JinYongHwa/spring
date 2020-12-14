@@ -20,6 +20,23 @@
 		table.board th{
 			text-align:center;	
 		}
+		.navigator{
+			margin-top:20px;
+			text-align:center;
+		}
+		.navigator a{
+			display:inline-block;
+			width:30px;
+			height:30px;
+			border:1px solid #ddd;
+			text-align:center;
+			line-height:30px;
+		}
+		.navigator a.active{
+			background:#aaa;
+			color:white;
+			text-decoration:none;
+		}
 	</style>
 </head>
 <body>
@@ -35,11 +52,11 @@
 					</tr>
 				</thead>
 				<tbody>
-					<c:forEach items="${ list }" var="board">
+					<c:forEach items="${ list }" var="board" varStatus="status" >
 						<tr>
-							<td class="text-center">${board.id }</td>
+							<td class="text-center">${  nav.startNum - status.index }</td>
 							<td>
-								<a href="${pageContext.request.contextPath }/view?id=${board.id}">
+								<a href="${pageContext.request.contextPath }/view?id=${board.id}&page=${nav.page}">
 									${board.title }
 								</a> 
 							</td>
@@ -51,9 +68,22 @@
 				</tbody>
 			</table>
 			<div class="navigator">
+			
+				<c:if test="${nav.prev }">
+					<a href="${pageContext.request.contextPath }/list?page=${nav.prevPage}">&lt;</a>
+				</c:if>
 				<c:forEach items="${nav.navArr }" var="page">
-					<a href="${pageContext.request.contextPath }/list?page=${page}">${page }</a>
+					<c:if test="${page==nav.page }">
+						<a class="active">${page }</a>
+					</c:if>
+					<c:if test="${page!=nav.page }">
+						<a href="${pageContext.request.contextPath }/list?page=${page}">${page }</a>
+					</c:if>
+					
 				</c:forEach>
+				<c:if test="${nav.next }">
+					<a href="${pageContext.request.contextPath }/list?page=${nav.nextPage}">&gt;</a>
+				</c:if>
 			</div>
 			
 			<div class="text-right">

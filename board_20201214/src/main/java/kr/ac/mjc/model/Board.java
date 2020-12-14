@@ -12,7 +12,7 @@ public class Board {
 	private int viewCount;
 	private String writer;
 	
-	
+	private int page;
 	
 	public Board() {
 		super();
@@ -21,6 +21,18 @@ public class Board {
 	
 	
 	
+	public int getPage() {
+		return page;
+	}
+
+
+
+	public void setPage(int page) {
+		this.page = page;
+	}
+
+
+
 	public int getId() {
 		return id;
 	}

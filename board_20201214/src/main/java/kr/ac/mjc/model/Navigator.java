@@ -5,7 +5,6 @@ import java.util.List;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
 public class Navigator {
 	private static final Logger logger = LoggerFactory.getLogger(Navigator.class);
 	private int page;	//현재페이지
