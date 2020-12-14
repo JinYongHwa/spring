@@ -109,20 +109,20 @@
 ``` java
 public class Navigator {
 	private static final Logger logger = LoggerFactory.getLogger(Navigator.class);
-	private int page;
-	private int start;
-	private int end;
-	private int prevPage;
-	private int nextPage;
-	private int lastPage;
-	private int startNum;
-	private boolean prev;
-	private boolean next;
+	private int page;	//현재페이지
+	private int start;	//navigator의 시작 페이지
+	private int end;	//navigator의 끝 페이지
+	private int prevPage;	//이전 navigator 클릭시 page번호
+	private int nextPage;	//다음 navigator 클릭시 page번호
+	private int lastPage;	//다음 navigator 클릭시 page번호
+	private int startNum;	//현재 페이지의 첫번째글 번호
+	private boolean prev;	//이전 navigator 존재유무
+	private boolean next;	//다음 navigator 존재유무
 
-	int count;
+	int count;	//전체 글갯수
 
-	int itemPerPage = 10;
-	int navCount = 10;
+	int itemPerPage = 10;	//한개페이지당 글의갯수
+	int navCount = 10;	//하단 navigator의 한번에 보여질 page 갯수 
 	
 	public Navigator() {
 	
