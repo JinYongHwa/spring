@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="board">
+	<insert id="write" useGeneratedKeys="true" keyProperty="id">
+		insert into board(title,text,viewCount,writer)
+		values(#{title},#{text},#{viewCount},#{writer})
+	</insert>
+	<insert id="insertFile" >
+		insert into file(id,originalFileName,size,uploadDate,boardId)
+		values(#{id},#{originalFileName},#{size},#{uploadDate},#{boardId})
+	</insert>
+	<select id="getItem" resultType="Board">
+		select * from board
+		where id=#{id}
+		limit 1
+	</select>
+	<select id="getList" resultType="Board">
+		select * from board
+		order by writeDate DESC
+		limit ${skip},${itemPerPage}
+	</select>
+	<update id="modify">
+		update board set title=#{title},text=#{text},writer=#{writer}
+		where id=${id}
+	</update>
+	<delete id="remove">
+		delete from board where id=#{id}
+	</delete>
+	<select id="getCount" resultType="Navigator">
+		select count(*) as count from board
+		limit 1
+	</select>
+	<update id="setViewCount">
+		update board set viewCount=${viewCount}
+		where id=#{id}
+	</update>
+	<select id="getAttachFiles" resultType="AttachFile">
+		select * from File
+		where boardId=#{id}
+	</select>
+	<select id="getFile" resultType="AttachFile">
+		select * from file
+		where id=#{id}
+	</select>
+	
+	
+</mapper>
