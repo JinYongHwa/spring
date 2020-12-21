@@ -107,6 +107,12 @@
 ### Navigator.java
 
 ``` java
+
+import java.util.ArrayList;
+import java.util.List;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 public class Navigator {
 	private static final Logger logger = LoggerFactory.getLogger(Navigator.class);
 	private int page;	//현재페이지
@@ -175,6 +181,7 @@ public class Navigator {
 		}
 		
 		int startNum=count-((page-1)*itemPerPage);
+		lastPage=getTotalPage(count);
 		setStartNum(startNum);
 		
 		
@@ -186,6 +193,12 @@ public class Navigator {
 	}
 	
 
+	public int getLastPage() {
+		return lastPage;
+	}
+	public void setLastPage(int lastPage) {
+		this.lastPage = lastPage;
+	}
 	public int getPage() {
 		return page;
 	}
