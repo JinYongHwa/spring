@@ -27,7 +27,7 @@
 
 ## Content-Dispoisition 한글처리
 ``` java
- String header = request.getHeader("User-Agent");
+String header = request.getHeader("User-Agent");
 String fileNameOrg=attachFile.getOriginalFileName();
 try {
 	if (header.contains("MSIE") || header.contains("Trident")) {
