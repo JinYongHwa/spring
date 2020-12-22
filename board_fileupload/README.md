@@ -24,3 +24,18 @@
 	<property name="maxUploadSize" value="524288000" />
 </bean>
   ```
+
+## Content-Dispoisition 한글처리
+``` java
+ String header = request.getHeader("User-Agent");
+String fileNameOrg=attachFile.getOriginalFileName();
+try {
+	if (header.contains("MSIE") || header.contains("Trident")) {
+		fileNameOrg = URLEncoder.encode(fileNameOrg, "UTF-8").replaceAll("\\+", "%20");
+		response.setHeader("Content-Disposition", "attachment;filename=" + fileNameOrg + ";");
+	} else {
+		fileNameOrg = new String(fileNameOrg.getBytes("UTF-8"), "ISO-8859-1");
+		response.setHeader("Content-Disposition", "attachment; filename=\"" + fileNameOrg + "\"");
+	}
+}catch(UnsupportedEncodingException e) {}
+```
