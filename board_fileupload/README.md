@@ -39,3 +39,23 @@ try {
 	}
 }catch(UnsupportedEncodingException e) {}
 ```
+
+# jsonView 를 위한설정
+
+## WEB-INF/spring/root-context.xml
+
+``` xml
+
+<bean
+	class="org.springframework.web.servlet.view.BeanNameViewResolver">
+	<property name="order" value="0" />
+</bean>
+
+<bean id="jsonView"
+	class="org.springframework.web.servlet.view.json.MappingJacksonJsonView">
+	<property name="contentType"
+		value="application/json;charset=UTF-8">
+	</property>
+</bean>
+```
+
