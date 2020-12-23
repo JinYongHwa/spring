@@ -42,6 +42,22 @@ try {
 
 # jsonView 를 위한설정
 
+## pom.xml
+``` xml
+<dependency>
+	<groupId>net.sf.json-lib</groupId>
+	<artifactId>json-lib</artifactId>
+	<version>2.4</version>
+	<classifier>jdk15</classifier>
+</dependency>
+
+<dependency>
+	<groupId>org.codehaus.jackson</groupId>
+	<artifactId>jackson-mapper-asl</artifactId>
+	<version>1.6.4</version>
+</dependency>
+```
+
 ## WEB-INF/spring/root-context.xml
 
 ``` xml
