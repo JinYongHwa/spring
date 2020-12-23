@@ -75,3 +75,21 @@ try {
 </bean>
 ```
 
+
+# 패스워드 암호화시키기 
+``` java
+public  String sha256(String msg)  throws NoSuchAlgorithmException {
+    MessageDigest md = MessageDigest.getInstance("SHA-256");
+    md.update(msg.getBytes());
+    return byteToHexString(md.digest());
+}
+
+public  String byteToHexString(byte[] data) {
+    StringBuilder sb = new StringBuilder();
+    for(byte b : data) {
+	sb.append(Integer.toString((b & 0xff) + 0x100, 16).substring(1));
+    }
+    return sb.toString();
+}
+```
+
