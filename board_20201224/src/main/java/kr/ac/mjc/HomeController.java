@@ -100,7 +100,7 @@ public class HomeController {
 	}
 
 	@RequestMapping(value = "/view", method = RequestMethod.GET)
-	public ModelAndView view(Query query) {
+	public ModelAndView view(Query query,HttpSession session) {
 
 		boardService.upViewCount(query.getId());
 		Board board = boardService.getItem(query.getId());
@@ -108,6 +108,10 @@ public class HomeController {
 		board.setAttachFiles(attachFiles);
 
 		ModelAndView mav = new ModelAndView();
+		
+		User loginUser=(User) session.getAttribute("user");
+		mav.addObject("user",loginUser);
+		
 		mav.setViewName("view");
 		mav.addObject("board", board);
 		if (query.getPage() == 0) {

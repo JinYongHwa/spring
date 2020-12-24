@@ -45,8 +45,13 @@
 		
 		<div class="text-center">
 			<a href="${ pageContext.request.contextPath }/list?page=${query.page}">목록</a>
-			<a href="${pageContext.request.contextPath }/modify?id=${board.id}&page=${query.page}">수정</a>
-			<a href="${pageContext.request.contextPath }/remove.do?id=${board.id}&page=${query.page}">삭제</a>
+			
+			<c:if test="${user!=null && user.id==board.userId }">
+				<a href="${pageContext.request.contextPath }/modify?id=${board.id}&page=${query.page}">수정</a>
+				<a href="${pageContext.request.contextPath }/remove.do?id=${board.id}&page=${query.page}">삭제</a>
+			</c:if>
+			
+			
 		</div>
 		
 	</div>

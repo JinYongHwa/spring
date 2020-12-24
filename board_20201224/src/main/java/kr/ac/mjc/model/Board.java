@@ -14,6 +14,7 @@ public class Board {
 	private Date writeDate;
 	private int viewCount;
 	private String writer;
+	private String userId;
 	
 	private List<MultipartFile> files;
 	private List<AttachFile> attachFiles;
@@ -25,6 +26,15 @@ public class Board {
 		writeDate=new Date();
 	}
 	
+	
+	public String getUserId() {
+		return userId;
+	}
+
+	public void setUserId(String userId) {
+		this.userId = userId;
+	}
+
 	public List<AttachFile> getAttachFiles() {
 		return attachFiles;
 	}

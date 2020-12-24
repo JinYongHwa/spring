@@ -3,16 +3,18 @@
 
 <mapper namespace="board">
 	<insert id="write" useGeneratedKeys="true" keyProperty="id">
-		insert into board(title,text,viewCount,writer)
-		values(#{title},#{text},#{viewCount},#{writer})
+		insert into board(title,text,viewCount,userId)
+		values(#{title},#{text},#{viewCount},#{userId})
 	</insert>
 	<select id="getItem" resultType="Board">
-		select * from board
-		where id=#{id}
-		limit 1
+		select board.id id,title, text,writeDate,user.name writer,viewCount,board.userId from board left outer join user
+		on user.id=board.userId
+		where board.id=#{id}
+		LIMIT 1
 	</select>
 	<select id="getList" resultType="Board">
-		select * from board
+		select board.id id,title, text,writeDate,user.name writer,viewCount from board left outer join user
+		on user.id=board.userId
 		order by writeDate DESC
 		limit ${skip},${itemPerPage}
 	</select>
