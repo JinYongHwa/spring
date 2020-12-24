@@ -1,5 +1,7 @@
 package kr.ac.mjc;
 
+import javax.servlet.http.HttpSession;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -63,6 +65,24 @@ public class UserController {
 		mav.addObject("result",resultObject);
 		return mav;
 	} 
+	
+	@RequestMapping(value="/login.do",method=RequestMethod.POST)
+	public ModelAndView loginDo(User user,HttpSession session) {
+		logger.info("{}",user.getEmail());
+		logger.info("{}",user.getPassword());
+		User loginUser=userService.login(user);
+		
+		if(loginUser==null) {
+			ModelAndView mav=new ModelAndView("login");
+			mav.addObject("msg","로그인이 실패하였습니다");
+			return mav;
+		}
+		session.setAttribute("user", loginUser);
+		
+		
+		ModelAndView mav=new ModelAndView("redirect:/list");
+		return mav;
+	}
 }
 
 

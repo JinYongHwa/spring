@@ -12,5 +12,11 @@
 		where email=#{email}
 		limit 1;
 	</select>
+	<select id="login" resultType="User">
+		select * from user
+		where email=#{email }
+		and password=#{password}
+		limit 1;
+	</select>
 
 </mapper>

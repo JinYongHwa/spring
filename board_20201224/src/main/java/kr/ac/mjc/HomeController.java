@@ -13,6 +13,7 @@ import java.util.Locale;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -30,6 +31,7 @@ import kr.ac.mjc.model.AttachFile;
 import kr.ac.mjc.model.Board;
 import kr.ac.mjc.model.Navigator;
 import kr.ac.mjc.model.Query;
+import kr.ac.mjc.model.User;
 import kr.ac.mjc.service.BoardService;
 
 /**
@@ -55,8 +57,19 @@ public class HomeController {
 	}
 
 	@RequestMapping(value = "/write", method = RequestMethod.GET)
-	public String write() {
-		return "write";
+	public ModelAndView write(HttpSession session) {
+		
+		User loginUser=(User) session.getAttribute("user");
+		ModelAndView mav;
+		if(loginUser!=null) {
+			 mav=new ModelAndView("write");
+			mav.addObject("user",loginUser);	
+		}
+		else {
+			 mav=new ModelAndView("redirect:/login");
+		}
+		
+		return mav;
 	}
 
 	@RequestMapping(value = "/write.do", method = RequestMethod.POST)
@@ -106,7 +119,7 @@ public class HomeController {
 	}
 
 	@RequestMapping(value = "/list", method = RequestMethod.GET)
-	public ModelAndView list(String page) {
+	public ModelAndView list(String page,HttpSession session) {
 		int pageInt = 1;
 
 		if (page != null) {
@@ -119,9 +132,14 @@ public class HomeController {
 		List<Board> list = boardService.getList(pageInt);
 		Navigator nav = boardService.getNavigator(pageInt);
 		ModelAndView mav = new ModelAndView("list");
+		
+		User loginUser=(User) session.getAttribute("user");
+		
 
 		mav.addObject("list", list);
 		mav.addObject("nav", nav);
+		mav.addObject("user",loginUser);
+		
 		return mav;
 
 	}
