@@ -39,3 +39,57 @@ try {
 	}
 }catch(UnsupportedEncodingException e) {}
 ```
+
+# jsonView 를 위한설정
+
+## pom.xml
+``` xml
+<dependency>
+	<groupId>net.sf.json-lib</groupId>
+	<artifactId>json-lib</artifactId>
+	<version>2.4</version>
+	<classifier>jdk15</classifier>
+</dependency>
+
+<dependency>
+	<groupId>org.codehaus.jackson</groupId>
+	<artifactId>jackson-mapper-asl</artifactId>
+	<version>1.6.4</version>
+</dependency>
+```
+
+## WEB-INF/spring/root-context.xml
+
+``` xml
+
+<bean
+	class="org.springframework.web.servlet.view.BeanNameViewResolver">
+	<property name="order" value="0" />
+</bean>
+
+<bean id="jsonView"
+	class="org.springframework.web.servlet.view.json.MappingJacksonJsonView">
+	<property name="contentType"
+		value="application/json;charset=UTF-8">
+	</property>
+</bean>
+```
+
+
+# 패스워드 암호화시키기 
+``` java
+public  String sha256(String msg)  throws NoSuchAlgorithmException {
+    MessageDigest md = MessageDigest.getInstance("SHA-256");
+    md.update(msg.getBytes());
+    return byteToHexString(md.digest());
+}
+
+public  String byteToHexString(byte[] data) {
+    StringBuilder sb = new StringBuilder();
+    for(byte b : data) {
+	sb.append(Integer.toString((b & 0xff) + 0x100, 16).substring(1));
+    }
+    return sb.toString();
+}
+```
+
