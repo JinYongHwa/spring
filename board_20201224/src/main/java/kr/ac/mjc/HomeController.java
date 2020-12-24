@@ -149,18 +149,37 @@ public class HomeController {
 	}
 
 	@RequestMapping(value = "/modify", method = RequestMethod.GET)
-	public ModelAndView modify(Query query) {
+	public ModelAndView modify(Query query,HttpSession session) {
 
-		Board board = boardService.getItem(query.getId());
-		ModelAndView mav = new ModelAndView("modify");
-		mav.addObject("board", board);
-		mav.addObject("query", query);
+		
+		
+		User loginUser=(User) session.getAttribute("user");
+		ModelAndView mav ;
+		if(loginUser==null) {
+			mav = new ModelAndView("redirect:/login");
+			
+		}
+		else {
+			Board board = boardService.getItem(query.getId());
+			List<AttachFile> attachFiles=boardService.getAttachFiles(query);
+			board.setAttachFiles(attachFiles);
+			mav = new ModelAndView("modify");
+			mav.addObject("board", board);
+			mav.addObject("query", query);
+			mav.addObject("user",loginUser);
+		}
+		
+		
 		return mav;
 	}
 
 	@RequestMapping(value = "/modify.do", method = RequestMethod.POST)
 	public String modifyDo(Board board) {
-
+		
+		boardService.removeAttach(board);
+		for(String attachId:board.getAttachIds()) {
+			logger.info("{}",attachId);
+		}
 		boardService.modify(board);
 		return "redirect:/view?id=" + board.getId() + "&page=" + board.getPage();
 

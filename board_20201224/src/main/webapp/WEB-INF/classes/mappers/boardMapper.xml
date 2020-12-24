@@ -48,6 +48,15 @@
 		where id=#{id}
 		limit 1
 	</select>
+	<delete id="removeAttach">
+		delete FROM attachfile
+		WHERE boardId=#{id}
+		AND id not IN 
+		(<foreach collection="attachIds" item="attachId">
+			#{attachId}
+		</foreach>)
+		
+	</delete>
 	
 	
 </mapper>

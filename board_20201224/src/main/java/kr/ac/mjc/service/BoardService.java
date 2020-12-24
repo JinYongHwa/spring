@@ -84,4 +84,10 @@ public class BoardService {
 		
 		return mybatis.selectOne("board.getAttachFileItem",attachFile);
 	}
+	
+	public void removeAttach(Board board) {
+		logger.info("{}",board.getId());
+		logger.info("{}",board.getAttachIds());
+		mybatis.delete("board.removeAttach",board);
+	}
 }
