@@ -88,6 +88,12 @@ public class BoardService {
 	public void removeAttach(Board board) {
 		logger.info("{}",board.getId());
 		logger.info("{}",board.getAttachIds());
-		mybatis.delete("board.removeAttach",board);
+		if(board.getAttachIds().size()==0) {
+			mybatis.delete("board.removeAttachAll",board);
+		}
+		else {
+			mybatis.delete("board.removeAttach",board);
+		}
+		
 	}
 }

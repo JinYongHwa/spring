@@ -177,9 +177,27 @@ public class HomeController {
 	public String modifyDo(Board board) {
 		
 		boardService.removeAttach(board);
-		for(String attachId:board.getAttachIds()) {
-			logger.info("{}",attachId);
+		
+		for (MultipartFile file : board.getFiles()) {
+
+			if (file.getSize() > 0) {
+				AttachFile attachFile = new AttachFile(file.getOriginalFilename(), file.getContentType(),
+						file.getSize(), board.getId());
+				boardService.insertAttachFile(attachFile);
+				File destPath = new File(FILE_PATH + attachFile.getId());
+				try {
+					file.transferTo(destPath);
+				} catch (IllegalStateException e) {
+					
+					e.printStackTrace();
+				} catch (IOException e) {
+					
+					e.printStackTrace();
+				}
+			}
+
 		}
+		
 		boardService.modify(board);
 		return "redirect:/view?id=" + board.getId() + "&page=" + board.getPage();
 

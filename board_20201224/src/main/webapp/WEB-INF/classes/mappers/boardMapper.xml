@@ -52,10 +52,14 @@
 		delete FROM attachfile
 		WHERE boardId=#{id}
 		AND id not IN 
-		(<foreach collection="attachIds" item="attachId">
+		<foreach collection="attachIds" item="attachId" separator="," open="(" close=")">
 			#{attachId}
-		</foreach>)
+		</foreach>
 		
+	</delete>
+	<delete id="removeAttachAll">
+		delete FROM attachfile
+		WHERE boardId=#{id}
 	</delete>
 	
 	

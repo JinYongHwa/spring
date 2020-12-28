@@ -42,14 +42,22 @@ table.board th {
 	color: white;
 	text-decoration: none;
 }
+.logout-form{
+	display:inline-block;
+}
 </style>
 </head>
 <body>
 	<div class="container">
 		<div class="text-right">
-			<c:if test="${user!=null }">
+		<c:if test="${user!=null }">
 			${user.name }님 안녕하세요
+			<form class="logout-form" action="logout.do" method="post">
+				<button class="btn" type="submit">로그아웃</button>
+			</form>
+				
 		</c:if>
+			
 		</div>
 	</div>
 

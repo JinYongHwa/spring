@@ -83,6 +83,13 @@ public class UserController {
 		ModelAndView mav=new ModelAndView("redirect:/list");
 		return mav;
 	}
+	
+	@RequestMapping(value="/logout.do",method=RequestMethod.POST)
+	public ModelAndView logoutDo(HttpSession session) {
+		session.setAttribute("user", null);
+		ModelAndView mav=new ModelAndView("redirect:/list");
+		return mav;
+	}
 }
 
 
