@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="board">
+	<insert id="write" useGeneratedKeys="true" keyProperty="id">
+		insert into board(title,text,viewCount,userId)
+		values(#{title},#{text},#{viewCount},#{userId})
+	</insert>
+	<select id="getItem" resultType="Board">
+		select board.id id,title, text,writeDate,user.name writer,viewCount,board.userId from board left outer join user
+		on user.id=board.userId
+		where board.id=#{id}
+		LIMIT 1
+	</select>
+	<select id="getList" resultType="Board">
+		select board.id id,title, text,writeDate,user.name writer,viewCount from board left outer join user
+		on user.id=board.userId
+		order by writeDate DESC
+		limit ${skip},${itemPerPage}
+	</select>
+	<update id="modify">
+		update board set title=#{title},text=#{text},writer=#{writer}
+		where id=${id}
+	</update>
+	<delete id="remove">
+		delete from board where id=#{id}
+	</delete>
+	<select id="getCount" resultType="Navigator">
+		select count(*) as count from board
+		limit 1
+	</select>
+	<update id="setViewCount">
+		update board set viewCount=${viewCount}
+		where id=#{id}
+	</update>
+	
+	<insert id="insertAttachFile">
+		insert attachFile(id,originalFileName,contentType,size,boardId)
+		values(#{id},#{originalFileName},#{contentType},#{size},#{boardId})
+	</insert>
+	
+	<select id="getAttachFiles" resultType="AttachFile">
+		select * from attachFile
+		where boardId=#{id}
+	</select>
+	<select id="getAttachFileItem" resultType="AttachFile">
+		select * from attachFile
+		where id=#{id}
+		limit 1
+	</select>
+	<delete id="removeAttach">
+		delete FROM attachfile
+		WHERE boardId=#{id}
+		AND id not IN 
+		<foreach collection="attachIds" item="attachId" separator="," open="(" close=")">
+			#{attachId}
+		</foreach>
+		
+	</delete>
+	<delete id="removeAttachAll">
+		delete FROM attachfile
+		WHERE boardId=#{id}
+	</delete>
+	
+	
+</mapper>
