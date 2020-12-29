@@ -116,5 +116,22 @@ public class MobileController {
 			
 		return mav;
 	}
+	@RequestMapping(value="/mobile/view",method=RequestMethod.GET)
+	public String view() {
+		return "mobile/view";
+	}
+	
+	@RequestMapping(value="/mobile/board.do",method=RequestMethod.POST)
+	public ModelAndView getItem(@RequestBody Board board) {
+		boardService.upViewCount(board.getId());
+		board=boardService.getItem(board.getId());
+		ModelAndView mav=new ModelAndView("jsonView");
+		mav.addObject("board", board);
+		return mav;
+	}
+	@RequestMapping(value="/mobile/test",method=RequestMethod.POST)
+	public String test() {
+		return "mobile/dist";
+	}
 	
 }

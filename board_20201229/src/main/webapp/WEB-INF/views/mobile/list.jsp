@@ -61,7 +61,7 @@
 				</tr>
 			</thead>
 			<tbody>
-				<tr v-for="board in list">
+				<tr v-for="board in list" @click="moveBoard(board)">
 					<td>
 						{{board.id}}
 					</td>
@@ -157,6 +157,10 @@
 					  this.list=result.data.list
 					  this.nav=result.data.nav
 				  })
+			  },
+			  moveBoard(board){
+				  console.log(board)
+				  location.replace("${pageContext.request.contextPath }/mobile/view?id="+board.id)
 			  }
 		  }
 		})
