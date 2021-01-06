@@ -143,7 +143,7 @@ public class MobileController {
 		return "mobile/write";
 	}
 	@RequestMapping(value="/mobile/write.do",method=RequestMethod.POST)
-	public ModelAndView writeDo(@RequestBody Board board,HttpSession session) {
+	public ModelAndView writeDo(Board board,HttpSession session) {
 		
 		User loginUser=(User)session.getAttribute("user");
 		
@@ -156,6 +156,7 @@ public class MobileController {
 			mav.addObject("board",board);
 		}
 		else {
+			
 			mav.addObject("result",false);
 			mav.addObject("message","게시글을 작성하려면 로그인을 해주세요");
 		}
@@ -168,14 +169,26 @@ public class MobileController {
 	}
 	
 	@RequestMapping(value="/mobile/board.do",method=RequestMethod.POST)
-	public ModelAndView getItem(Board board) {
-		
-		boardService.upViewCount(board.getId());
-		board=boardService.getItem(board.getId());
+	public ModelAndView getItem(int id) {
+		logger.info("{}",id);
+		boardService.upViewCount(id);
+		Board board=boardService.getItem(id);
 		ModelAndView mav=new ModelAndView("jsonView");
 		mav.addObject("board", board);
 		return mav;
 	}
+	@RequestMapping(value="/mobile/remove.do",method=RequestMethod.POST)
+	public ModelAndView removeBoard(int id) {
+		boardService.remove(id);
+		ModelAndView mav=new ModelAndView("jsonView");
+		mav.addObject("result", true);
+		return mav;
+	}
+	@RequestMapping(value="/mobile/modify.do",method=RequestMethod.POST)
+	public ModelAndView modifyBoard(int id,String title,String text) {
+		boardService.modify(board);
+	}
+	
 	@RequestMapping(value="/mobile/test",method=RequestMethod.POST)
 	public String test() {
 		return "mobile/dist";
