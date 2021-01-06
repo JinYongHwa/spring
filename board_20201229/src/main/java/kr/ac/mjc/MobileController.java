@@ -55,21 +55,23 @@ public class MobileController {
 		return "mobile/login";
 	}
 	@RequestMapping(value="/mobile/login.do",method=RequestMethod.POST)
-	public ModelAndView loginDo(@RequestBody User user,HttpSession session) {
-		logger.info("{}",user.getEmail());
-		logger.info("{}",user.getPassword());
+	public ModelAndView loginDo(User user,HttpSession session) {
+		logger.info("{}",session.getAttribute("user"));
+		
 		User loginUser=userService.login(user);
 		
 		
 		ModelAndView mav=new ModelAndView("jsonView");
 		
 		if(loginUser==null) {
-			mav.addObject("result", "fail");
+			mav.addObject("result", false);
 			mav.addObject("message","아이디나 패스워드가 일치하지 않습니다");
 		}
 		else {
-			mav.addObject("result", "success");
+			mav.addObject("result",true);
+			mav.addObject("message","로그인 완료되었습니다");
 			session.setAttribute("user", loginUser);
+			
 		}
 		
 		return mav;
@@ -131,8 +133,8 @@ public class MobileController {
 		else {
 			mav.addObject("message","회원가입이 실패하였습니다");
 		}
-		
 		return mav;
+		
 	}
 	
 	
@@ -166,10 +168,10 @@ public class MobileController {
 	}
 	
 	@RequestMapping(value="/mobile/board.do",method=RequestMethod.POST)
-	public ModelAndView getItem(int id) {
-		logger.info("test");
-		boardService.upViewCount(id);
-		Board board=boardService.getItem(id);
+	public ModelAndView getItem(Board board) {
+		
+		boardService.upViewCount(board.getId());
+		board=boardService.getItem(board.getId());
 		ModelAndView mav=new ModelAndView("jsonView");
 		mav.addObject("board", board);
 		return mav;
