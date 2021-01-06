@@ -115,6 +115,25 @@ public class MobileController {
 		}
 		return mav;
 	}
+	@RequestMapping(value="/mobile/join.do",method=RequestMethod.POST)
+	public ModelAndView join(String email,String name,String password) {
+		User user=new User();
+		user.setEmail(email);
+		user.setName(name);
+		user.setPassword(password);
+		
+		boolean result=userService.join(user);
+		ModelAndView mav=new ModelAndView("jsonView");
+		mav.addObject("result",result);
+		if(result) {
+			mav.addObject("message","회원가입이 완료되었습니다");
+		}
+		else {
+			mav.addObject("message","회원가입이 실패하였습니다");
+		}
+		
+		return mav;
+	}
 	
 	
 	@RequestMapping(value="/mobile/write",method=RequestMethod.GET)
