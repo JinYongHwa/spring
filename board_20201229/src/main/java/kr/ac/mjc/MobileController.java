@@ -41,7 +41,7 @@ public class MobileController {
 	public ModelAndView listDo(Query query,HttpSession session) {
 		
 		
-		logger.info("page {}",(String)session.getAttribute("test"));
+		
 		List<Board> list=boardService.getList(query.getPage());
 		Navigator nav=boardService.getNavigator(query.getPage());
 		ModelAndView mav=new ModelAndView("jsonView");
@@ -143,8 +143,8 @@ public class MobileController {
 		return "mobile/write";
 	}
 	@RequestMapping(value="/mobile/write.do",method=RequestMethod.POST)
-	public ModelAndView writeDo(Board board,HttpSession session) {
-		
+	public ModelAndView writeDo(@RequestBody Board board,HttpSession session) {
+		logger.info("{}",board);
 		User loginUser=(User)session.getAttribute("user");
 		
 		ModelAndView mav=new ModelAndView("jsonView");
@@ -185,8 +185,17 @@ public class MobileController {
 		return mav;
 	}
 	@RequestMapping(value="/mobile/modify.do",method=RequestMethod.POST)
-	public ModelAndView modifyBoard(int id,String title,String text) {
+	public ModelAndView modifyBoard(@RequestBody Board board) {
+//		Board board=new Board();
+//		board.setId(id);
+//		board.setTitle(title);
+//		board.setText(text);
+		
 		boardService.modify(board);
+		
+		ModelAndView mav=new ModelAndView("jsonView");
+		mav.addObject("result", true);
+		return mav;
 	}
 	
 	@RequestMapping(value="/mobile/test",method=RequestMethod.POST)
