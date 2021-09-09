@@ -1,77 +1,55 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
-
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-<%@ page session="false"%>
+    pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<!DOCTYPE html>
 <html>
 <head>
-<title>Home</title>
-<link href="${pageContext.request.contextPath}/resources/common.css"
-	rel="stylesheet">
-<link rel="stylesheet"
-	href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css"
-	integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2"
-	crossorigin="anonymous">
-
+	<meta charset="UTF-8">
+	<title>Insert title here</title>
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KyZXEAg3QhqLMpG8r+8fhAXLRk2vvoC2f3B09zVXn8CA5QIVfZOJ3BCsw2P0p/We" crossorigin="anonymous">
 </head>
 <body>
-
 	<div class="container">
-		<table>
-			<colgroup>
-				<col width="80px">
-				<col>
-				<col width="150px">
-			</colgroup>
-			<tr>
-				<th width="80px" class="text-center">글번호</th>
+		<table class="table">
+			<thead>
+				<th class="text-center" width="60px">No</th>
 				<th class="text-center">제목</th>
-				<th width="100px" class="text-center">작성자</th>
-				<th width="150px" class="text-center">작성일</th>
-			</tr>
-
-			<c:forEach items="${list}" var="item" varStatus="status">
-				<tr>
-					<td class="text-center"><c:out
-							value="${nav.startNum-status.index }"></c:out></td>
-					<td class="text-center">
-					<a href="${ pageContext.request.contextPath }/board?id=${item.id}&page=${currentPage}">
-					<c:out value="${item.title }"></c:out>
-					</a>
-					
-					</td>
-					<td class="text-center"><c:out value="${item.writer}"></c:out></td>
-					<td class="text-center"><c:out value="${item.formattedDate }"></c:out></td>
-				</tr>
-			</c:forEach>
-
+				<th class="text-center" width="100px">작성자</th>
+				<th class="text-center" width="100px">조회수</th>
+				<th class="text-center" width="200px">작성시간</th>
+			</thead>
+			<tbody>
+				<c:forEach items="${boardList }" var="board" varStatus="status">
+					<tr onClick="location.href='view?id=${board.id}'">
+						<td class="text-center">${nav.startNum-status.index}</td>
+						<td class="text-center">${board.title }</td>
+						<td class="text-center">${board.email }</td>
+						<td class="text-center">${board.viewCount }</td>
+						<td class="text-center">${board.createDate }</td>
+					</tr>
+				</c:forEach>
+			</tbody>
 		</table>
-
-		<div class="navigator text-center">
-			<c:if test="${nav.prev }">
-				<a href="${pageContext.request.contextPath }/?page=${nav.prevPage}">&lt;</a>
+		
+		<div class="text-center">
+			
+			<c:if test="${ nav.prev }">
+				<a class="btn" href="list?page=${nav.prevPage }">&lt;</a>
 			</c:if>
-			<c:forEach items="${nav.navArr}" var="page">
-				<a class="<c:if test="${ currentPage==page }">active</c:if>"
-					href="${pageContext.request.contextPath}/?page=${page}"> <c:out
-						value="${page }"></c:out>
-				</a>
+		
+			<c:forEach items="${nav.navArr }" var="page">
+				<a class="btn <c:if test="${ nav.page==page }">btn-primary</c:if>" href="list?page=${page}">${page}</a>
 			</c:forEach>
+			
 			<c:if test="${nav.next }">
-				<a href="${pageContext.request.contextPath }/?page=${nav.nextPage}">&gt;</a>
+				<a class="btn" href="list?page=${nav.nextPage }">&gt;</a>
 			</c:if>
-
+			
 		</div>
-
-
-
-		<div class="text-right">
-			<a href="${pageContext.request.contextPath}/write">글쓰기</a>
+		
+		<div class="right">
+			<a class="btn btn-primary" href="write">글 작성</a>
 		</div>
-
-	</div>
-
-
-
+	</div>	
 </body>
 </html>

@@ -48,13 +48,14 @@ public class UserController {
 	}
 	@RequestMapping(value="/login_proc",method=RequestMethod.POST)
 	public ModelAndView loginProc(User user,HttpSession session) {
-		int result=userService.login(user);
-		if(result==200) {
-			session.setAttribute("user", user);
-			ModelAndView mav=new ModelAndView("redirect:write");
+		
+		User loginUser=userService.login(user); //로그인된 사용자정보
+		if(loginUser!=null) {		//로그인 성공했을때
+			session.setAttribute("user", loginUser);
+			ModelAndView mav=new ModelAndView("redirect:list");
 			return mav;
 		}
-		else {
+		else {	//로그인 실패시
 			ModelAndView mav=new ModelAndView("login");
 			mav.addObject("message", "아이디 또는 패스워드가 틀렸습니다");
 			return mav;

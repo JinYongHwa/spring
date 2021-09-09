@@ -1,34 +1,24 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+    pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
-<link href="${pageContext.request.contextPath}/resources/common.css"
-	rel="stylesheet">
-<link rel="stylesheet"
-	href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css"
-	integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2"
-	crossorigin="anonymous">
+<!-- CSS only -->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KyZXEAg3QhqLMpG8r+8fhAXLRk2vvoC2f3B09zVXn8CA5QIVfZOJ3BCsw2P0p/We" crossorigin="anonymous">
+<style>
+	
+</style>
 </head>
 <body>
-
-	<div class="container">
-		<form action="write.do" method="post">
-			<input class="form-control" name="title" placeholder="제목">
-			<input class="form-control mt-2" name="writer" placeholder="작성자">
-			<textarea class="form-control mt-2" height="500px" name="text" placeholder="내용"></textarea>
-			<div class="text-center mt-2">
-			
-				<input type="submit" class="btn btn-primary" value="작성">
-			</div>
-		</form>
-
-
-	</div>
-
-
+	<form class="container" method="POST" action="write_proc" enctype="multipart/form-data">
+		<input type="text" placeholder="글제목" class="form-control mt-4" name="title">
+		<div>작성자 : ${user.email }</div>
+		<textarea class="form-control mt-2" placeholder="내용" name="body"></textarea>
+		<input type="file" value="첨부파일" name="files" multiple>
+		<button class="form-control mt-2">글작성</button>
+	</form>
+	
 </body>
 </html>

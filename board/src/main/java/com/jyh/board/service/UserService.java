@@ -39,7 +39,7 @@ public class UserService {
 		return 200;
 		
 	}
-	public int login(User user) {
+	public User login(User user) {
 		String password=user.getPassword();
 		try {
 			password=sha256(password);
@@ -49,10 +49,10 @@ public class UserService {
 		user.setPassword(password);
 		User tmpUser=mybatis.selectOne("user.loginCheck",user);
 		if(tmpUser!=null) {
-			return 200;		//로그인 성공시
+			return tmpUser;		//로그인 성공시
 		}
 		else {
-			return 401;		//아이디 또는 패스워드 틀렸을시
+			return null;		//아이디 또는 패스워드 틀렸을시
 		}
 		
 	}

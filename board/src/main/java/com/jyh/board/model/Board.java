@@ -2,6 +2,10 @@ package com.jyh.board.model;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
+
+import org.springframework.web.multipart.MultipartFile;
+
 
 public class Board {
 	
@@ -9,9 +13,27 @@ public class Board {
 	private String title;
 	private String body;
 	private Date createDate;
+	private String email;
 	private int userId;
 	private int viewCount;
 	
+	private List<MultipartFile> files;
+	
+	
+	
+	
+	public List<MultipartFile> getFiles() {
+		return files;
+	}
+	public void setFiles(List<MultipartFile> files) {
+		this.files = files;
+	}
+	public String getEmail() {
+		return email;
+	}
+	public void setEmail(String email) {
+		this.email = email;
+	}
 	public int getId() {
 		return id;
 	}
