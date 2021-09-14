@@ -147,13 +147,13 @@ public class CORSFilter implements Filter{
 
 ``` xml
 <filter-name>cors</filter-name>
-	    <filter-class>com.jyh.board.CORSFilter</filter-class>
-	</filter>
-	
-	<filter-mapping>
-	    <filter-name>cors</filter-name>
-	    <url-pattern>/*</url-pattern>
-	</filter-mapping>
+    <filter-class>com.jyh.board.CORSFilter</filter-class>
+</filter>
+
+<filter-mapping>
+    <filter-name>cors</filter-name>
+    <url-pattern>/*</url-pattern>
+</filter-mapping>
 
 ```
 
