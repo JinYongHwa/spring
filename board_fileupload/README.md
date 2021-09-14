@@ -146,7 +146,8 @@ public class CORSFilter implements Filter{
 # web.xml
 
 ``` xml
-<filter-name>cors</filter-name>
+<filter>
+    <filter-name>cors</filter-name>
     <filter-class>com.jyh.board.CORSFilter</filter-class>
 </filter>
 
