@@ -40,7 +40,7 @@ export default {
     }
   },
   mounted(){
-    this.$axios.get("http://localhost:8080/board/mobile/list")
+    this.$axios.get("/mobile/list")
     .then(result=>{
       console.log(result)
       this.boardList = result.data.boardList
