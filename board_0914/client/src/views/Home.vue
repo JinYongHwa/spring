@@ -40,7 +40,7 @@ export default {
     }
   },
   mounted(){
-    this.$axios.get("/mobile/list")
+    this.$axios.get("list")
     .then(result=>{
       console.log(result)
       this.boardList = result.data.boardList

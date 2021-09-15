@@ -122,7 +122,7 @@ public class BoardController {
 	
 	@RequestMapping(value="/",method=RequestMethod.GET)
 	public ModelAndView main() {
-		return list("1");
+		return new ModelAndView("redirect:list");
 	}
 	@RequestMapping(value="/list",method=RequestMethod.GET)
 	public ModelAndView list(String page) {

@@ -20,8 +20,7 @@ public class MobileController {
 	@Autowired
 	BoardService boardService;
 	
-	@RequestMapping(value="/mobile/list",method=RequestMethod.GET)
-	
+	@RequestMapping(value="/mobile/list",method=RequestMethod.POST)
 	public ModelAndView list(String page) {
 		int intPage=1;
 		if(page!=null) {
