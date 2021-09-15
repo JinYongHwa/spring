@@ -198,5 +198,23 @@ public class CORSFilter implements Filter{
 
 ```
 
+#  vue.js proxy 설정
+
+``` javascript
+module.exports = {
+    // 개발 서버 설정
+    devServer: {
+        proxy: {
+            '^/api': {
+                target: 'http://localhost:8080/board/',
+                changeOrigin: true
+            },
+        }
+    }
+};
+
+```
+
+
 
 
