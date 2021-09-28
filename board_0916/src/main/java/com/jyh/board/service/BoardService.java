@@ -48,7 +48,6 @@ public class BoardService {
 		Navigator nav=new Navigator();
 		nav.setPage(page);
 		List<Board> list=mybatis.selectList("board.list",nav);
-		
 		return list;
 	}
 	public Navigator getNavigator(int page) {

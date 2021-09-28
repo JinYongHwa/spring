@@ -32,11 +32,6 @@ public class MobileController {
 	UserService userService;
 	
 	@RequestMapping(value="/mobile/list",method=RequestMethod.GET)
-	public String listView() {
-		return "mobile/list";
-	}
-	
-	@RequestMapping(value="/mobile/list_proc",method=RequestMethod.GET)
 	public ModelAndView list(String page) {
 		int intPage=1;
 		if(page!=null) {
@@ -51,12 +46,7 @@ public class MobileController {
 		return mav;
 	}
 	
-	@RequestMapping(value="/mobile/login")
-	public String loginView() {
-		return "mobile/login";
-	}
-	
-	@RequestMapping(value="/mobile/login_proc",method=RequestMethod.POST)
+	@RequestMapping(value="/mobile/login",method=RequestMethod.POST)
 	public ModelAndView login(@RequestBody User user,HttpSession session) {
 		logger.info("{}",user.getEmail());
 		User loginUser=userService.login(user); //로그인된 사용자정보
@@ -80,10 +70,10 @@ public class MobileController {
 	@RequestMapping(value="/mobile/userinfo",method=RequestMethod.POST)
 	public ModelAndView userinfo(HttpSession session) {
 		
-		User user=(User)session.getAttribute("user");
-//		User user=new User();
-//		user.setId(3);
-//		user.setEmail("test");
+//		User user=(User)session.getAttribute("user");
+		User user=new User();
+		user.setId(3);
+		user.setEmail("test");
 		
 		
 		ModelAndView mav=new ModelAndView("jsonView");
@@ -98,11 +88,6 @@ public class MobileController {
 		
 	}
 	
-	@RequestMapping(value="/mobile/write")
-	public String writeView() {
-		return "mobile/write";
-	}
-	
 	@RequestMapping(value="/mobile/board/write",method=RequestMethod.POST)
 	public ModelAndView boardWrite(@RequestBody Board board,HttpSession session) {
 		ModelAndView mav=userinfo(session);
@@ -110,16 +95,10 @@ public class MobileController {
 		board.setUserId(user.getId());
 		boardService.write(board);
 		
-		
 		mav=new ModelAndView("jsonView");
-		mav.addObject("result",true); 
+		mav.addObject("result",true);
 		mav.addObject("boardId",board.getId());
 		return mav;
-	}
-	
-	@RequestMapping(value="/mobile/view")
-	public String view() {
-		return "mobile/view";
 	}
 	
 	@RequestMapping(value="/mobile/view",method=RequestMethod.POST)
@@ -130,49 +109,6 @@ public class MobileController {
 		
 		ModelAndView mav=new ModelAndView("jsonView");
 		mav.addObject("board",board);
-		return mav;
-	}
-	
-	@RequestMapping(value="/mobile/remove",method=RequestMethod.POST)
-	public ModelAndView remove(@RequestBody Board board,HttpSession session) {
-		
-		board=boardService.getBoard(board.getId());
-		User user=(User)session.getAttribute("user");
-		
-		ModelAndView mav=new ModelAndView("jsonView");
-		
-		//로그인되지 않았거나 로그인된사용자의 게시물이 아닐경우
-		if(user==null||board.getUserId()!=user.getId()) {	
-			mav.addObject("result",false);
-			mav.addObject("message","삭제 권한이 없습니다");
-			return mav;
-		}
-		
-		boardService.delete(board.getId());	
-		mav.addObject("result",true);
-		return mav;
-	}
-	
-	@RequestMapping(value="/mobile/modify")
-	public String modifyView() {
-		return "mobile/modify";
-	}
-	
-	@RequestMapping(value="/mobile/modify",method=RequestMethod.POST)
-	public ModelAndView modify(@RequestBody Board board,HttpSession session) {
-		Board tmpBoard=boardService.getBoard(board.getId());
-		User user=(User)session.getAttribute("user");
-		
-		ModelAndView mav=new ModelAndView("jsonView");
-		//로그인되있지 않거나 수정하려는 게시글이 로그인된사용자의 글이 아닌경우
-		if(user==null|| tmpBoard.getUserId()!=user.getId()) {	//권한이 없을경우
-			mav.addObject("result", false);
-			mav.addObject("message", "게시글을 수정할 권한이 없습니다");
-			return mav;
-		}
-		
-		boardService.modify(board);
-		mav.addObject("result", true);
 		return mav;
 	}
 }
